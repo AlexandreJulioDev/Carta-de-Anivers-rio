@@ -1,0 +1,961 @@
+/* ============================================================
+   HOMENAGEM LUCIENE — style.css
+   Design: Noite elegante — azul marinho + preto + branco + verde + amarelo
+   Paleta baseada nas cores favoritas da aniversariante
+   Fonte: Cormorant Garamond (títulos) + Lora (corpo) + Dancing Script (assinatura)
+   ============================================================ */
+
+/* ── VARIÁVEIS ── */
+:root {
+  /* Backgrounds: preto profundo + azul marinho */
+  --preto: #05080f;
+  --preto-suave: #090e1a;
+  --azul-marinho: #0b1a38;
+  --azul-marinho-2: #0e2248;
+  --azul-marinho-3: #162d5e;
+
+  /* Acento principal: amarelo quente (destaque de ouro natural) */
+  --amarelo: #f0c040;
+  --amarelo-claro: #f7d96a;
+  --amarelo-brilho: #fdeea0;
+
+  /* Acento secundário: verde esmeralda */
+  --verde: #22a86e;
+  --verde-claro: #3dcb8a;
+  --verde-suave: rgba(34, 168, 110, 0.15);
+
+  /* Acento terciário: vermelho (coração, emoção) */
+  --vermelho: #c0392b;
+  --vermelho-claro: #e84040;
+
+  /* Texto */
+  --branco: #f2f6ff;
+  --branco-suave: #d8e4f0;
+  --texto-corpo: #b8cce0;
+
+  /* Sombras */
+  --sombra-azul: rgba(11, 26, 56, 0.6);
+  --sombra-amarelo: rgba(240, 192, 64, 0.3);
+  --sombra-verde: rgba(34, 168, 110, 0.25);
+
+  --fonte-titulo: "Cormorant Garamond", Georgia, serif;
+  --fonte-corpo: "Lora", Georgia, serif;
+  --fonte-assinatura: "Dancing Script", cursive;
+}
+
+/* ── RESET & BASE ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  background: var(--preto);
+  color: var(--branco);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════════
+   TELA INICIAL (INTRO)
+══════════════════════════════════════════ */
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at 30% 20%,
+    #0e2248 0%,
+    #080f20 45%,
+    #05080f 85%
+  );
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+#intro-screen.fadeout {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* Stars canvas */
+#stars-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Orb de luz central */
+.glow-orb {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(14, 34, 72, 0.55) 0%,
+    rgba(8, 16, 40, 0.2) 50%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  animation: orb-pulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes orb-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Conteúdo do intro */
+.intro-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  animation: intro-rise 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.intro-subtitle {
+  font-family: var(--fonte-corpo);
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amarelo);
+  opacity: 0.85;
+  margin-bottom: 0.8rem;
+}
+
+.intro-title {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--branco);
+  line-height: 1;
+  margin-bottom: 1.6rem;
+  text-shadow: 0 4px 30px rgba(11, 26, 56, 0.6);
+}
+
+.intro-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2.5rem;
+}
+
+.intro-divider span:not(.diamond) {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--amarelo),
+    transparent
+  );
+}
+
+.diamond {
+  color: var(--amarelo);
+  font-size: 0.75rem;
+  animation: spin-slow 8s linear infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Botão principal */
+#open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(
+    135deg,
+    rgba(34, 168, 110, 0.18),
+    rgba(14, 34, 72, 0.4)
+  );
+  border: 1px solid rgba(34, 168, 110, 0.55);
+  color: var(--verde-claro);
+  font-family: var(--fonte-corpo);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  padding: 1rem 2.4rem;
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+#open-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(34, 168, 110, 0.3),
+    rgba(240, 192, 64, 0.1)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+}
+
+#open-btn:hover::before {
+  opacity: 1;
+}
+#open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(34, 168, 110, 0.3);
+  border-color: var(--verde-claro);
+  color: var(--amarelo-claro);
+}
+#open-btn:active {
+  transform: translateY(0);
+}
+
+.btn-text {
+  position: relative;
+  z-index: 1;
+}
+.btn-icon {
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.intro-hint {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240, 192, 64, 0.5);
+}
+
+/* ══════════════════════════════════════════
+   CONTEÚDO PRINCIPAL
+══════════════════════════════════════════ */
+#main-content {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    #05080f 0%,
+    #080f20 20%,
+    #0b1530 50%,
+    #080f20 80%,
+    #05080f 100%
+  );
+  padding: 2rem 1rem 6rem;
+}
+
+#main-content.hidden {
+  display: none;
+}
+
+#main-content.fade-in {
+  animation: main-fadein 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes main-fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Canvas de partículas */
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ── Controle de música ── */
+#music-control {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(5, 8, 15, 0.8);
+  border: 1px solid rgba(34, 168, 110, 0.4);
+  color: var(--verde-claro);
+  font-family: var(--fonte-corpo);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+#music-control:hover {
+  background: rgba(34, 168, 110, 0.15);
+  border-color: var(--verde-claro);
+  color: var(--amarelo-claro);
+}
+
+#music-icon {
+  font-size: 1rem;
+}
+
+/* ── Wrapper da carta ── */
+.carta-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
+  animation: carta-rise 1.4s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes carta-rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Cabeçalho da carta ── */
+.carta-header {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+}
+
+.header-ornament {
+  color: var(--amarelo);
+  font-size: 0.7rem;
+  letter-spacing: 0.5em;
+  margin-bottom: 1.2rem;
+  opacity: 0.65;
+}
+
+.carta-saudacao {
+  font-family: var(--fonte-corpo);
+  font-size: 0.82rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--verde-claro);
+  opacity: 0.9;
+  margin-bottom: 1.6rem;
+}
+
+/* Foto */
+.foto-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.8rem;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.foto-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(240, 192, 64, 0.45);
+  animation: ring-pulse 3s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.foto-perfil {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--amarelo);
+  display: block;
+  box-shadow:
+    0 0 0 6px rgba(240, 192, 64, 0.1),
+    0 0 40px rgba(240, 192, 64, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* Placeholder para quando não há foto */
+.foto-placeholder {
+  display: none;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 3px solid var(--amarelo);
+  background: linear-gradient(
+    135deg,
+    var(--azul-marinho-2),
+    var(--azul-marinho-3)
+  );
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  box-shadow:
+    0 0 40px rgba(240, 192, 64, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* Nome principal */
+.carta-nome {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--branco);
+  line-height: 1;
+  margin-bottom: 1.2rem;
+  text-shadow:
+    0 4px 30px rgba(240, 192, 64, 0.15),
+    0 0 60px rgba(11, 26, 56, 0.4);
+}
+
+/* Divisor dourado */
+.carta-divider,
+.footer-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.carta-divider span:not(.diamond-gold),
+.footer-divider span:not(.diamond-gold) {
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--amarelo),
+    transparent
+  );
+}
+
+.diamond-gold {
+  color: var(--amarelo);
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+
+/* ── Corpo da carta ── */
+.carta-body {
+  padding: 2.5rem 2rem 2rem;
+  position: relative;
+}
+
+/* Linha decorativa lateral */
+.carta-body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--verde),
+    transparent
+  );
+  opacity: 0.4;
+}
+
+.carta-body p {
+  font-family: var(--fonte-corpo);
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  line-height: 1.9;
+  color: var(--texto-corpo);
+  margin-bottom: 1.4rem;
+  font-weight: 400;
+}
+
+/* Parágrafos de destaque */
+.carta-body p.destaque {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--amarelo-claro);
+  text-align: center;
+  padding: 1.2rem 0;
+  margin: 0.8rem 0 1.6rem;
+  line-height: 1.3;
+}
+
+.carta-body p.destaque-2 {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.2rem, 4vw, 1.7rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--verde-claro);
+  text-align: center;
+  padding: 0.8rem 0;
+  margin: 0.5rem 0 1.4rem;
+  line-height: 1.4;
+}
+
+.carta-body em {
+  font-style: italic;
+  color: var(--amarelo-claro);
+}
+
+/* ── Rodapé / Assinatura ── */
+.carta-footer {
+  text-align: center;
+  padding: 1.5rem 2rem 3rem;
+}
+
+.footer-divider {
+  margin-bottom: 2rem;
+}
+
+.assinatura-texto {
+  font-family: var(--fonte-corpo);
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--texto-corpo);
+  margin-bottom: 0.4rem;
+  opacity: 0.8;
+}
+
+.assinatura-nome {
+  font-family: var(--fonte-assinatura);
+  font-size: clamp(2.8rem, 8vw, 4rem);
+  color: var(--amarelo-claro);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 20px rgba(240, 192, 64, 0.3);
+}
+
+.assinatura-cargo {
+  font-family: var(--fonte-corpo);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--verde-claro);
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+
+.footer-coracao {
+  font-size: 1.6rem;
+  animation: heart-beat 2s ease-in-out infinite;
+}
+
+@keyframes heart-beat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.2);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.1);
+  }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVO
+══════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .carta-body {
+    padding: 2rem 1.2rem;
+  }
+
+  .carta-body::before {
+    display: none;
+  }
+
+  #music-control {
+    top: 0.8rem;
+    right: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.72rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .carta-body {
+    padding: 2.5rem 3rem;
+  }
+}
+
+/* ══════════════════════════════════════════
+   MURAL DE FOTOS
+══════════════════════════════════════════ */
+.mural {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 1rem 2rem;
+  overflow: hidden;
+}
+
+.mural-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/* ── Cartão polaroid ── */
+.mural-card {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: carta-rise 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mural-card--left {
+  animation-delay: 0.2s;
+  transform-origin: bottom right;
+}
+.mural-card--right {
+  animation-delay: 0.5s;
+  transform-origin: bottom left;
+}
+
+.mural-card--left {
+  rotate: -3deg;
+}
+.mural-card--right {
+  rotate: 3deg;
+}
+
+.mural-card--left:hover,
+.mural-card--right:hover {
+  rotate: 0deg;
+  z-index: 5;
+  transition:
+    rotate 0.4s ease,
+    scale 0.4s ease;
+  scale: 1.05;
+}
+
+.mural-frame {
+  background: #fff;
+  padding: 10px 10px 36px;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mural-foto {
+  display: block;
+  width: 200px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 1px;
+}
+
+/* Placeholder quando foto não carrega */
+.mural-frame.sem-foto .mural-foto {
+  display: none;
+}
+.mural-frame.sem-foto .mural-foto-placeholder {
+  display: flex !important;
+  width: 200px;
+  height: 240px;
+  background: linear-gradient(
+    135deg,
+    var(--azul-marinho-2),
+    var(--azul-marinho-3)
+  );
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  border-radius: 1px;
+}
+
+.mural-foto-placeholder {
+  display: none;
+}
+
+/* Legenda estilo polaroid */
+.mural-polaroid-label {
+  font-family: var(--fonte-assinatura);
+  font-size: 1.1rem;
+  color: var(--preto-suave);
+  margin-top: -24px; /* dentro do padding branco */
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  width: 200px;
+  padding: 0 4px;
+  /* texto fica sobre o fundo branco do polaroid */
+}
+
+/* ── Centro do mural ── */
+.mural-centro {
+  flex: 1;
+  text-align: center;
+  padding: 0 1rem;
+  animation: carta-rise 1s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mural-ornamento {
+  color: var(--amarelo);
+  font-size: 0.65rem;
+  letter-spacing: 0.5em;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.mural-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2.8rem, 7vw, 4.5rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--branco);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+  text-shadow: 0 4px 20px rgba(240, 192, 64, 0.15);
+}
+
+.mural-subtitulo {
+  font-family: var(--fonte-corpo);
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--verde-claro);
+  opacity: 0.85;
+  margin-bottom: 2rem;
+}
+
+.mural-seta {
+  color: var(--amarelo);
+  font-size: 1.4rem;
+  opacity: 0.5;
+  animation: seta-bounce 2s ease-in-out infinite;
+}
+
+@keyframes seta-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.9;
+  }
+}
+
+/* ── Responsivo do mural ── */
+@media (max-width: 600px) {
+  .mural-inner {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .mural-card--left,
+  .mural-card--right {
+    rotate: 0deg;
+  }
+
+  .mural-foto {
+    width: 180px;
+    height: 210px;
+  }
+
+  .mural-foto-placeholder,
+  .mural-frame.sem-foto .mural-foto-placeholder {
+    width: 180px;
+    height: 210px;
+  }
+
+  .mural-polaroid-label {
+    width: 180px;
+  }
+
+  .mural-centro {
+    order: -1;
+    padding-bottom: 0;
+  }
+  .mural-seta {
+    display: none;
+  }
+}
+
+/* ══════════════════════════════════════════
+   CARTA — Estilo Papel / Envelope
+══════════════════════════════════════════ */
+
+/* Lacre no topo, estilo envelope aberto */
+.envelope-topo {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  height: 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.envelope-topo::before,
+.envelope-topo::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(135deg, #0b1a38 0%, #0e2248 100%);
+  border: 1px solid rgba(240, 192, 64, 0.2);
+}
+
+.envelope-topo::before {
+  left: 0;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0);
+}
+
+.envelope-topo::after {
+  right: 0;
+  clip-path: polygon(0 100%, 100% 100%, 0 0);
+}
+
+.envelope-lacre {
+  position: relative;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(
+    135deg,
+    var(--azul-marinho-3),
+    var(--azul-marinho-2)
+  );
+  border: 2px solid var(--amarelo);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--amarelo);
+  font-size: 1rem;
+  box-shadow: 0 4px 20px rgba(240, 192, 64, 0.3);
+  margin-bottom: -21px; /* sobrepõe o papel */
+}
+
+/* Papel da carta */
+.carta-papel {
+  max-width: 700px;
+  margin: 0 auto;
+  background: linear-gradient(160deg, #0c1830 0%, #081225 50%, #0a1628 100%);
+  border: 1px solid rgba(240, 192, 64, 0.2);
+  border-top: none;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 80px rgba(11, 26, 56, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+  padding-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Textura sutil no papel */
+.carta-papel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 28px,
+    rgba(240, 192, 64, 0.025) 28px,
+    rgba(240, 192, 64, 0.025) 29px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.carta-papel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ajuste: cabeçalho sem foto, só texto */
+.carta-header {
+  text-align: center;
+  padding: 3.5rem 2rem 1.5rem;
+}
